@@ -1,5 +1,6 @@
 package com.techfolks.controller;
 
+import com.techfolks.model.response.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,6 @@ import com.techfolks.model.request.InitiateKycAuto;
 import com.techfolks.model.request.InitiateKycManual;
 import com.techfolks.model.request.ReSendOtp;
 import com.techfolks.model.request.SubmitOtp;
-import com.techfolks.model.response.ErrorResponse;
-import com.techfolks.model.response.GetCaptchaResponse;
-import com.techfolks.model.response.InitiateKycAutoResponse;
 import com.techfolks.service.impl.KycService;
 
 @RestController
@@ -46,4 +44,25 @@ public class KycController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
 		} 
 	}
+
+	@PostMapping("/submitOtp")
+	public ResponseEntity<SubmitOtpResponse> submitOtpRequest(@RequestBody SubmitOtp submitOtp) {
+		try {
+			SubmitOtpResponse response = kycService.submitOtp(submitOtp);
+			return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
+
+	@PostMapping("/resendOtp")
+	public ResponseEntity<ReSendOtpResponse> resendOtpRequest(@RequestBody ReSendOtp reSendOtp) {
+		try {
+			ReSendOtpResponse response = kycService.resendOtp(reSendOtp);
+			return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
+
 }
