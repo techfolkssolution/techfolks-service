@@ -11,7 +11,7 @@ import com.techfolks.model.response.SubmitOtpResponse;
 public interface KycService {
 	InitiateKycAutoResponse initiateAutoKycFunc(InitiateKycAuto initiateAutoKyc) throws JsonProcessingException;
 
-	SubmitOtpResponse submitOtp(SubmitOtp submitOtp);
+	SubmitOtpResponse submitOtp(SubmitOtp submitOtp) throws JsonProcessingException ;
 
-	ReSendOtpResponse resendOtp(ReSendOtp reSendOtp);
+	ReSendOtpResponse resendOtp(ReSendOtp reSendOtp) throws JsonProcessingException;
 }
