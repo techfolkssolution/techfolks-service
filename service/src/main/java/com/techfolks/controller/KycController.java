@@ -16,11 +16,10 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techfolks.model.request.InitiateKycAuto;
 import com.techfolks.model.request.InitiateKycManual;
-import com.techfolks.model.request.ReSendOtp;
-import com.techfolks.model.request.SubmitOtp;
 import com.techfolks.model.response.ErrorResponse;
 import com.techfolks.model.response.GetCaptchaResponse;
 import com.techfolks.model.response.InitiateKycAutoResponse;
+import com.techfolks.model.response.InitiateKycManualResponse;
 import com.techfolks.service.impl.KycService;
 
 @RestController
@@ -46,4 +45,39 @@ public class KycController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
 		} 
 	}
+	
+	@PostMapping("/initiate-kyc-manual")
+	public ResponseEntity<?> initiateKycManual(@RequestBody InitiateKycManual initiateManualKyc) throws JsonMappingException, JsonProcessingException {
+		try {
+			InitiateKycManualResponse initiateKycManualResponse = kycService.initiateManualKycFunc(initiateManualKyc);
+			return ResponseEntity.status(HttpStatus.OK).body(initiateKycManualResponse);
+		} catch (HttpClientErrorException e) {
+			ErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), ErrorResponse.class);
+			return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+        } catch(HttpServerErrorException e) {
+        	ErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), ErrorResponse.class);
+			return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+		} catch (Exception e) {
+			ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+		}
+	}
+	
+	@GetMapping("/get-captcha")
+	public ResponseEntity<?> getCaptcha() throws JsonMappingException, JsonProcessingException {
+		try {
+			GetCaptchaResponse getCaptchaResponse = kycService.getCaptchaFunc();
+			return ResponseEntity.status(HttpStatus.OK).body(getCaptchaResponse);
+		} catch (HttpClientErrorException e) {
+			ErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), ErrorResponse.class);
+			return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+        } catch(HttpServerErrorException e) {
+        	ErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), ErrorResponse.class);
+			return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+		} catch (Exception e) {
+			ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+		}
+	}
+	
 }
