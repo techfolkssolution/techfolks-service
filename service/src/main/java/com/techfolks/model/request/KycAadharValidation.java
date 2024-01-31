@@ -1,5 +1,8 @@
 package com.techfolks.model.request;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -10,12 +13,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SubmitOtp {
-	public String shareCode;
-	public String otp;
-	public String codeVerifier;
-	public String transactionId;
-	public String fwdp;
-	public Boolean validateXml;
-
+public class KycAadharValidation {
+	@NotNull
+	@Size(max = 45)
+	public String client_ref_num;
+	@NotNull
+	@Size(min = 12, max = 12)
+	public String aadhaar;
 }

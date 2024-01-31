@@ -1,4 +1,4 @@
-package com.techfolks.model.request;
+package com.techfolks.model.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -10,12 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SubmitOtp {
-	public String shareCode;
-	public String otp;
-	public String codeVerifier;
-	public String transactionId;
-	public String fwdp;
-	public Boolean validateXml;
-
+public class KycSuccessResponse {
+	public String http_response_code;
+	public String client_ref_num;
+	public String request_id;
+	public String result_code;
+	public String message;
+	public Object result;
 }
