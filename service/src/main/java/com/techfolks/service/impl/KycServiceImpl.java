@@ -1,11 +1,8 @@
 package com.techfolks.service.impl;
 
-<<<<<<< HEAD
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techfolks.model.request.InitiateKycAuto;
-=======
-
 import com.techfolks.model.dto.Api;
 import com.techfolks.model.dto.ThirdPartyReqRes;
 import com.techfolks.repository.ApiRepository;
@@ -17,14 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.techfolks.model.request.InitiateKycAuto;
 import com.techfolks.model.request.InitiateKycManual;
 import com.techfolks.model.response.GetCaptchaResponse;
 import com.techfolks.model.response.InitiateKycAutoResponse;
 import com.techfolks.model.response.InitiateKycManualResponse;
->>>>>>> c23966c (ThirdPartyReqRes Table Added)
 import com.techfolks.model.request.ReSendOtp;
 import com.techfolks.model.request.SubmitOtp;
 import com.techfolks.model.response.ReSendOtpResponse;
@@ -32,10 +25,7 @@ import com.techfolks.model.response.SubmitOtpResponse;
 import com.techfolks.repository.ThirdPartyReqResRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.Base64;
-import java.util.List;
-
 @Slf4j
 @Service
 public class KycServiceImpl implements KycService {
@@ -49,13 +39,9 @@ public class KycServiceImpl implements KycService {
     @Autowired
     private RestTemplate restTemplate;
 
-
     private String clientID = "41487515";
     private String clientSecret = "YUoLRXhucHH6dKXCqi8Emhaqt6dgALvK";
     private String apiUrl = "https://svcdemo.digitap.work/ent/v3/kyc/";
-<<<<<<< HEAD
-=======
-
 
     @Override
     public InitiateKycManualResponse initiateManualKycFunc(InitiateKycManual initiateManualKyc) throws JsonProcessingException, JsonProcessingException {
@@ -83,8 +69,6 @@ public class KycServiceImpl implements KycService {
         GetCaptchaResponse jsonObject = new ObjectMapper().readValue(responseBody, GetCaptchaResponse.class);
         return jsonObject;
     }
->>>>>>> c23966c (ThirdPartyReqRes Table Added)
-
     @Override
     public InitiateKycAutoResponse initiateAutoKycFunc(InitiateKycAuto initiateAutoKyc) throws JsonProcessingException {
         HttpHeaders headers = new HttpHeaders();
@@ -110,9 +94,6 @@ public class KycServiceImpl implements KycService {
         ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
         return responseEntity;
     }
-<<<<<<< HEAD
-=======
-
 
     public ResponseEntity<String> restAPICall(String url, String data, HttpMethod type) {
         RestTemplate restTemplate = new RestTemplate();
@@ -126,8 +107,6 @@ public class KycServiceImpl implements KycService {
         ResponseEntity<String> responseEntity = restTemplate.exchange(url, type, requestEntity, String.class);
         return responseEntity;
     }
-
->>>>>>> c23966c (ThirdPartyReqRes Table Added)
 
     @Override
     public SubmitOtpResponse submitOtp(SubmitOtp submitOtp) throws JsonProcessingException {
