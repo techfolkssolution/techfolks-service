@@ -22,6 +22,4 @@ public class KycVoterValidation {
 	@Size(min = 10, max = 23)
 	@Pattern(regexp = "^(([a-zA-Z]{3}\\/?\\d{6,7})|([a-zA-Z]{2}\\/\\d{1,3}\\/\\d{2,3}\\/\\d{6,7})|([a-zA-Z]{2}\\d{10,12}))$", message = "Voter ID is not valid")
 	public String epic_number;
-	@NotNull
-	public String dob;
 }

@@ -2,9 +2,7 @@ package com.techfolks.service.impl;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +26,6 @@ public class KycServiceImpl implements KycService {
 		
 	@Override
 	public InitiateKycManualResponse initiateManualKycFunc(InitiateKycManual initiateManualKyc) throws JsonProcessingException, JsonProcessingException {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
         String jsonString = new ObjectMapper().writeValueAsString(initiateManualKyc);
         ResponseEntity<String> result = commonService.kycRestAPICall("intiate-kyc", jsonString, HttpMethod.POST);
         String responseBody = result.getBody();
@@ -39,8 +35,6 @@ public class KycServiceImpl implements KycService {
 	
 	@Override
 	public GetCaptchaResponse getCaptchaFunc() throws JsonProcessingException, JsonProcessingException {
-		HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
         ResponseEntity<String> result = commonService.kycRestAPICall("get-captcha", null, HttpMethod.GET);
         String responseBody = result.getBody();
         GetCaptchaResponse jsonObject = new ObjectMapper().readValue(responseBody, GetCaptchaResponse.class);
@@ -49,8 +43,6 @@ public class KycServiceImpl implements KycService {
 
     @Override
     public InitiateKycAutoResponse initiateAutoKycFunc(InitiateKycAuto initiateAutoKyc) throws JsonProcessingException {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
         String jsonString = new ObjectMapper().writeValueAsString(initiateAutoKyc);
         ResponseEntity<String> result = commonService.kycRestAPICall("intiate-kyc-auto", jsonString, HttpMethod.POST);
         String responseBody = result.getBody();
@@ -61,8 +53,6 @@ public class KycServiceImpl implements KycService {
 
     @Override
     public SubmitOtpResponse submitOtp(SubmitOtp submitOtp) throws JsonProcessingException {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
         String jsonString = new ObjectMapper().writeValueAsString(submitOtp);
         ResponseEntity<String> result = commonService.kycRestAPICall("submit-otp", jsonString, HttpMethod.POST);
         String responseBody = result.getBody();
@@ -72,8 +62,6 @@ public class KycServiceImpl implements KycService {
 
     @Override
     public ReSendOtpResponse resendOtp (ReSendOtp reSendOtp) throws JsonProcessingException {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
         String jsonString = new ObjectMapper().writeValueAsString(reSendOtp);
         ResponseEntity<String> result = commonService.kycRestAPICall("resend-otp", jsonString, HttpMethod.POST);
         String responseBody = result.getBody();
