@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8eb778c5-e09e-4846-aab9-b5442a6fa823" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/techfolks/service/impl/KycServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/techfolks/service/impl/KycServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/techfolks/controller/KycFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/techfolks/controller/KycFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/techfolks/controller/KycPanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/techfolks/controller/KycPanController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/techfolks/service/impl/CommonServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/techfolks/service/impl/CommonServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/techfolks/service/impl/KycFormService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/techfolks/service/impl/KycFormService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/techfolks/service/impl/KycFormServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/techfolks/service/impl/KycFormServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/techfolks/service/impl/KycPanService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/techfolks/service/impl/KycPanService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/techfolks/service/impl/KycPanServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/techfolks/service/impl/KycPanServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,9 +37,9 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "featureKhushi",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "E:/TechFolkSolutions/TechFolk/techfolks-service/service/src/main/java/com/techfolks/repository",
+    "last_opened_file_path": "E:/TechFolkSolutions/updated code/techfolks-service",
     "settings.editor.selected.configurable": "editor.preferences.fonts.default"
   }
 }]]></component>
