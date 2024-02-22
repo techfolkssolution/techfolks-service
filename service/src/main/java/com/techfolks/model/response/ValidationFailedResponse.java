@@ -1,6 +1,7 @@
 package com.techfolks.model.response;
 
-import org.springframework.http.HttpStatus;
+import java.util.ArrayList;
+
 import org.springframework.http.HttpStatusCode;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -13,7 +14,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ErrorResponse {
+public class ValidationFailedResponse {
+	
 	public HttpStatusCode code;
-	public String msg;
+	public ArrayList<ValidationError> data;
+
 }

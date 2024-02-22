@@ -1,8 +1,5 @@
 package com.techfolks.model.response;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -13,7 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ErrorResponse {
-	public HttpStatusCode code;
-	public String msg;
+public class ValidationError {
+	
+	public String field;
+	public String message;
+
 }

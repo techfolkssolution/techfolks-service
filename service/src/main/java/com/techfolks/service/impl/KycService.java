@@ -14,8 +14,7 @@ import com.techfolks.model.response.SubmitOtpResponse;
 public interface KycService {
 	InitiateKycAutoResponse initiateAutoKycFunc(InitiateKycAuto initiateAutoKyc) throws JsonProcessingException;
 
-	InitiateKycManualResponse initiateManualKycFunc(InitiateKycManual initiateManualKyc)
-			throws JsonProcessingException, JsonProcessingException;
+	InitiateKycManualResponse initiateManualKycFunc(InitiateKycManual initiateManualKyc) throws JsonProcessingException, JsonProcessingException;
 
 	GetCaptchaResponse getCaptchaFunc() throws JsonProcessingException, JsonProcessingException;
 
