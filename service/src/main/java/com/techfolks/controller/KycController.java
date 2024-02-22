@@ -30,60 +30,59 @@ import com.techfolks.service.impl.KycService;
 @RequestMapping("/rest/okyc")
 public class KycController {
 	
-	@Autowired
-	private KycService kycService;
-	
-	@PostMapping("/initiate-kyc-auto")
-	public ResponseEntity<?> initiateKycAuto(@RequestBody InitiateKycAuto initiateAutoKyc) throws JsonMappingException, JsonProcessingException {
-		try {
-			InitiateKycAutoResponse initiateKycAutoResponse = kycService.initiateAutoKycFunc(initiateAutoKyc);
-			return ResponseEntity.status(HttpStatus.OK).body(initiateKycAutoResponse);
-		} catch (HttpClientErrorException e) {
-			ErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), ErrorResponse.class);
-			return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
-        } catch(HttpServerErrorException e) {
-        	ErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), ErrorResponse.class);
-			return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
-		} catch (Exception e) {
-			ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-		} 
-	}
-	
-	@PostMapping("/initiate-kyc-manual")
-	public ResponseEntity<?> initiateKycManual(@RequestBody InitiateKycManual initiateManualKyc) throws JsonMappingException, JsonProcessingException {
-		try {
-			InitiateKycManualResponse initiateKycManualResponse = kycService.initiateManualKycFunc(initiateManualKyc);
-			return ResponseEntity.status(HttpStatus.OK).body(initiateKycManualResponse);
-		} catch (HttpClientErrorException e) {
-			ErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), ErrorResponse.class);
-			return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
-        } catch(HttpServerErrorException e) {
-        	ErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), ErrorResponse.class);
-			return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
-		} catch (Exception e) {
-			ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-		}
-	}
-	
-	@GetMapping("/get-captcha")
-	public ResponseEntity<?> getCaptcha() throws JsonMappingException, JsonProcessingException {
-		try {
-			GetCaptchaResponse getCaptchaResponse = kycService.getCaptchaFunc();
-			return ResponseEntity.status(HttpStatus.OK).body(getCaptchaResponse);
-		} catch (HttpClientErrorException e) {
-			ErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), ErrorResponse.class);
-			return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
-        } catch(HttpServerErrorException e) {
-        	ErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), ErrorResponse.class);
-			return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
-		} catch (Exception e) {
-			ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-		}
-	}
-	   
+    @Autowired
+    private KycService kycService;
+
+    @PostMapping("/initiate-kyc-auto")
+    public ResponseEntity<?> initiateKycAuto(@RequestBody InitiateKycAuto initiateAutoKyc) throws JsonMappingException, JsonProcessingException {
+        try {
+            InitiateKycAutoResponse initiateKycAutoResponse = kycService.initiateAutoKycFunc(initiateAutoKyc);
+            return ResponseEntity.status(HttpStatus.OK).body(initiateKycAutoResponse);
+        } catch (HttpClientErrorException e) {
+            ErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), ErrorResponse.class);
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+        } catch (HttpServerErrorException e) {
+            ErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), ErrorResponse.class);
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+        } catch (Exception e) {
+            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+
+    @PostMapping("/initiate-kyc-manual")
+    public ResponseEntity<?> initiateKycManual(@RequestBody InitiateKycManual initiateManualKyc) throws JsonMappingException, JsonProcessingException {
+        try {
+            InitiateKycManualResponse initiateKycManualResponse = kycService.initiateManualKycFunc(initiateManualKyc);
+            return ResponseEntity.status(HttpStatus.OK).body(initiateKycManualResponse);
+        } catch (HttpClientErrorException e) {
+            ErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), ErrorResponse.class);
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+        } catch (HttpServerErrorException e) {
+            ErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), ErrorResponse.class);
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+        } catch (Exception e) {
+            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+
+    @GetMapping("/get-captcha")
+    public ResponseEntity<?> getCaptcha() throws JsonMappingException, JsonProcessingException {
+        try {
+            GetCaptchaResponse getCaptchaResponse = kycService.getCaptchaFunc();
+            return ResponseEntity.status(HttpStatus.OK).body(getCaptchaResponse);
+        } catch (HttpClientErrorException e) {
+            ErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), ErrorResponse.class);
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+        } catch (HttpServerErrorException e) {
+            ErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), ErrorResponse.class);
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+        } catch (Exception e) {
+            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
 
     @PostMapping("/submitOtp")
     public ResponseEntity<?> submitOtpRequest(@RequestBody SubmitOtp submitOtp) throws JsonMappingException, JsonProcessingException {

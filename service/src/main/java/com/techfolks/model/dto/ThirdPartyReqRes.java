@@ -8,15 +8,18 @@ import jakarta.persistence.*;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ThirdPartyReqRes {
     @Id
-    @GeneratedValue(strategy
-            = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Column(name = "id")
     private Integer id;
+
     @Column(name = "request")
     private String request;
+
     @OneToOne
     @JoinColumn(name = "api", foreignKey = @ForeignKey(name = "api_foreign_key_api_id"), referencedColumnName = "id")
     private Api api;
+
     @Column(name = "response")
     private String response;
 

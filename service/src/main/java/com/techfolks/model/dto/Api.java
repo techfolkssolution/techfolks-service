@@ -3,6 +3,8 @@ package com.techfolks.model.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "api")
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -14,12 +16,24 @@ public class Api {
     @Column(name = "api")
     private String api;
 
+    @OneToMany(mappedBy = "api", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<ThirdPartyReqRes> thirdPartyReqResList;
+
     public Api() {
     }
 
-    public Api(Integer id, String api) {
+    public Api(Integer id, String api, List<ThirdPartyReqRes> thirdPartyReqResList) {
         this.id = id;
         this.api = api;
+        this.thirdPartyReqResList = thirdPartyReqResList;
+    }
+
+    public List<ThirdPartyReqRes> getThirdPartyReqResList() {
+        return thirdPartyReqResList;
+    }
+
+    public void setThirdPartyReqResList(List<ThirdPartyReqRes> thirdPartyReqResList) {
+        this.thirdPartyReqResList = thirdPartyReqResList;
     }
 
     public Integer getId() {

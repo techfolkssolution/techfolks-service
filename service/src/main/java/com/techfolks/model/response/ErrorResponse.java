@@ -1,5 +1,6 @@
 package com.techfolks.model.response;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
