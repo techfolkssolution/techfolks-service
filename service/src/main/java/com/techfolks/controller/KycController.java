@@ -1,7 +1,5 @@
 package com.techfolks.controller;
 
-import com.techfolks.model.response.*;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +16,16 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techfolks.model.request.InitiateKycAuto;
 import com.techfolks.model.request.InitiateKycManual;
+import com.techfolks.model.request.ReSendOtp;
+import com.techfolks.model.request.SubmitOtp;
 import com.techfolks.model.response.ErrorResponse;
 import com.techfolks.model.response.GetCaptchaResponse;
 import com.techfolks.model.response.InitiateKycAutoResponse;
 import com.techfolks.model.response.InitiateKycManualResponse;
-import com.techfolks.model.request.ReSendOtp;
-import com.techfolks.model.request.SubmitOtp;
+import com.techfolks.model.response.ReSendOtpResponse;
+import com.techfolks.model.response.SubmitOtpResponse;
 import com.techfolks.service.impl.KycService;
 
-@Slf4j
 @RestController
 @RequestMapping("/rest/okyc")
 public class KycController {
@@ -84,25 +83,7 @@ public class KycController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
 		}
 	}
-	
-}
-
-    @PostMapping("/initiate-kyc-auto")
-    public ResponseEntity<?> initiateKycAuto(@RequestBody InitiateKycAuto initiateAutoKyc) throws JsonMappingException, JsonProcessingException {
-        try {
-            InitiateKycAutoResponse initiateKycAutoResponse = kycService.initiateAutoKycFunc(initiateAutoKyc);
-            return ResponseEntity.status(HttpStatus.OK).body(initiateKycAutoResponse);
-        } catch (HttpClientErrorException e) {
-            ErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), ErrorResponse.class);
-            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
-        } catch (HttpServerErrorException e) {
-            ErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), ErrorResponse.class);
-            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
-        } catch (Exception e) {
-            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-        }
-    }
+	   
 
     @PostMapping("/submitOtp")
     public ResponseEntity<?> submitOtpRequest(@RequestBody SubmitOtp submitOtp) throws JsonMappingException, JsonProcessingException {
@@ -135,7 +116,7 @@ public class KycController {
         } catch (Exception e) {
             ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-        }
-    }
+		}
+	}
 
 }

@@ -1,4 +1,8 @@
-package com.techfolks.model.request;
+package com.techfolks.model.response;
+
+import java.util.ArrayList;
+
+import org.springframework.http.HttpStatusCode;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -10,12 +14,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SubmitOtp {
-	public String shareCode;
-	public String otp;
-	public String codeVerifier;
-	public String transactionId;
-	public String fwdp;
-	public Boolean validateXml;
+public class ValidationFailedResponse {
+	
+	public HttpStatusCode code;
+	public ArrayList<ValidationError> data;
 
 }
