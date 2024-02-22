@@ -53,7 +53,7 @@ public class KycPanServiceImpl implements KycPanService {
 	@Override
     public KycSuccessResponse KycPanAadharLinkValidationFunc(KycPanAadharLinkValidation kycPanAadharLinkValidation) throws JsonProcessingException {
         String jsonString = new ObjectMapper().writeValueAsString(kycPanAadharLinkValidation);
-        ResponseEntity<String> gigit result = commonService.kycNewRestAPICall("pan_aadhaar_link", jsonString, HttpMethod.POST);
+        ResponseEntity<String> result = commonService.kycNewRestAPICall("pan_aadhaar_link", jsonString, HttpMethod.POST);
         String responseBody = result.getBody();
         KycSuccessResponse jsonObject = new ObjectMapper().readValue(responseBody, KycSuccessResponse.class);
         return jsonObject;
