@@ -16,12 +16,16 @@ public class KycVehicleServiceImpl implements KycVehicleService {
 	
 	@Autowired
 	CommonService commonService;
+
+    @Autowired
+    ThirdPartyReqRes thirdPartyReqRes;
 	
 	@Override
     public KycSuccessResponse AssetVehicleRCValidationFunc(AssetVehicleRCValidation assetVehicleRCValidation) throws JsonProcessingException {
         String jsonString = new ObjectMapper().writeValueAsString(assetVehicleRCValidation);
         ResponseEntity<String> result = commonService.kycNewRestAPICall("rc", jsonString, HttpMethod.POST);
         String responseBody = result.getBody();
+        thirdPartyReqRes.saveThirdPartyReqRes("rc",jsonString,responseBody);
         KycSuccessResponse jsonObject = new ObjectMapper().readValue(responseBody, KycSuccessResponse.class);
         return jsonObject;
     }
@@ -31,6 +35,7 @@ public class KycVehicleServiceImpl implements KycVehicleService {
         String jsonString = new ObjectMapper().writeValueAsString(kycDrivingLicenseValidation);
         ResponseEntity<String> result = commonService.kycNewRestAPICall("dl", jsonString, HttpMethod.POST);
         String responseBody = result.getBody();
+        thirdPartyReqRes.saveThirdPartyReqRes("dl",jsonString,responseBody);
         KycSuccessResponse jsonObject = new ObjectMapper().readValue(responseBody, KycSuccessResponse.class);
         return jsonObject;
     }

@@ -15,12 +15,16 @@ public class KycVoterServiceImpl implements KycVoterService {
 	
 	@Autowired
 	CommonService commonService;
-	
+
+    @Autowired
+    ThirdPartyReqRes thirdPartyReqRes;
+
 	@Override
     public KycSuccessResponse kycVoterValidationFunc(KycVoterValidation kycVoter) throws JsonProcessingException {
         String jsonString = new ObjectMapper().writeValueAsString(kycVoter);
         ResponseEntity<String> result = commonService.kycNewRestAPICall("voter", jsonString, HttpMethod.POST);
         String responseBody = result.getBody();
+        thirdPartyReqRes.saveThirdPartyReqRes("voter",jsonString,responseBody);
         KycSuccessResponse jsonObject = new ObjectMapper().readValue(responseBody, KycSuccessResponse.class);
         return jsonObject;
     }

@@ -10,19 +10,16 @@ import com.techfolks.model.response.KycSuccessResponse;
 
 public interface KycPanService {
 
-//    KycSuccessResponse advancePanValidation(KycPanAdvanceValidation panAdvanceValidationRequest)
-//            throws JsonMappingException, JsonProcessingException;
+    KycSuccessResponse advancePanValidation(KycPanAdvanceValidation panAdvanceValidationRequest)
+            throws JsonMappingException, JsonProcessingException;
 
     public KycSuccessResponse panDetailsValidation(KycPanDetailsValidation kycPanDetailsValidation)
             throws JsonMappingException, JsonProcessingException;
 	KycSuccessResponse KycPanBasicValidationFunc(KycPanBasicValidation kycPanBasicValidation)
 			throws JsonProcessingException;
 
-	KycSuccessResponse KycPanAdvanceValidationFunc(KycPanAdvanceValidation kycPanAdvanceValidation)
-			throws JsonProcessingException;
-
-	KycSuccessResponse KycPanDetailsValidationFunc(KycPanDetailsValidation kycPanDetailsValidation)
-			throws JsonProcessingException;
+//	KycSuccessResponse KycPanAdvanceValidationFunc(KycPanAdvanceValidation kycPanAdvanceValidation)
+//			throws JsonProcessingException;
 
 	KycSuccessResponse KycPanAadharLinkValidationFunc(KycPanAadharLinkValidation kycPanAadharLinkValidation)
 			throws JsonProcessingException;

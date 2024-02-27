@@ -15,12 +15,16 @@ public class KycAadharServiceImpl implements KycAadharService {
 	
 	@Autowired
 	CommonService commonService;
+
+    @Autowired
+    ThirdPartyReqRes thirdPartyReqRes;
 	
 	@Override
     public KycSuccessResponse KycAadharValidationFunc(KycAadharValidation kycAadharValidation) throws JsonProcessingException {
         String jsonString = new ObjectMapper().writeValueAsString(kycAadharValidation);
         ResponseEntity<String> result = commonService.kycNewRestAPICall("aadhaar", jsonString, HttpMethod.POST);
         String responseBody = result.getBody();
+        thirdPartyReqRes.saveThirdPartyReqRes("aadhaar",jsonString,responseBody);
         KycSuccessResponse jsonObject = new ObjectMapper().readValue(responseBody, KycSuccessResponse.class);
         return jsonObject;
     }
@@ -30,6 +34,7 @@ public class KycAadharServiceImpl implements KycAadharService {
         String jsonString = new ObjectMapper().writeValueAsString(kycAadharValidation);
         ResponseEntity<String> result = commonService.kycNewRestAPICall("basic_aadhaar", jsonString, HttpMethod.POST);
         String responseBody = result.getBody();
+        thirdPartyReqRes.saveThirdPartyReqRes("basic_aadhaar",jsonString,responseBody);
         KycSuccessResponse jsonObject = new ObjectMapper().readValue(responseBody, KycSuccessResponse.class);
         return jsonObject;
     }

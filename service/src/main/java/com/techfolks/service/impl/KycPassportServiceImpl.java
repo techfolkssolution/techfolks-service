@@ -15,12 +15,16 @@ public class KycPassportServiceImpl implements KycPassportService {
 	
 	@Autowired
 	CommonService commonService;
+
+    @Autowired
+    ThirdPartyReqRes thirdPartyReqRes;
 	
 	@Override
     public KycSuccessResponse kycPassportValidationFunc(KycPassportValidation kycPassport) throws JsonProcessingException {
         String jsonString = new ObjectMapper().writeValueAsString(kycPassport);
         ResponseEntity<String> result = commonService.kycNewRestAPICall("passport", jsonString, HttpMethod.POST);
         String responseBody = result.getBody();
+        thirdPartyReqRes.saveThirdPartyReqRes("passport",jsonString,responseBody);
         KycSuccessResponse jsonObject = new ObjectMapper().readValue(responseBody, KycSuccessResponse.class);
         return jsonObject;
     }

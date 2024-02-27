@@ -18,6 +18,9 @@ public class KycFormServiceImpl implements KycFormService {
     @Autowired
     private CommonService commonService;
 
+    @Autowired
+    ThirdPartyReqRes thirdPartyReqRes;
+
     @Override
     public KycSuccessResponse form206Validation(KycForm206AbValidation kycForm206AValidation)
             throws JsonMappingException, JsonProcessingException {
@@ -26,6 +29,7 @@ public class KycFormServiceImpl implements KycFormService {
         String jsonString = new ObjectMapper().writeValueAsString(kycForm206AValidation);
         ResponseEntity<String> result = commonService.kycNewRestAPICall("form206ab_compliance_status", jsonString, HttpMethod.POST);
         String responseBody = result.getBody();
+        thirdPartyReqRes.saveThirdPartyReqRes("form206ab_compliance_status",jsonString,responseBody);
         KycSuccessResponse jsonObject = new ObjectMapper().readValue(responseBody, KycSuccessResponse.class);
         return jsonObject;
     }

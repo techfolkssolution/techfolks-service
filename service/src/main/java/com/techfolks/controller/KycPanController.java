@@ -30,24 +30,24 @@ public class KycPanController {
     @Autowired
     private KycPanService kycPanService;
 
-//    @PostMapping("/pan_advance")
-//    public ResponseEntity<?> advancePanValidation(@RequestBody KycPanAdvanceValidation panAdvanceValidationRequest) throws JsonMappingException, JsonProcessingException {
-//        try {
-//            KycSuccessResponse panAdvanceValidationResponse = kycPanService.advancePanValidation(panAdvanceValidationRequest);
-//            return ResponseEntity.status(HttpStatus.OK).body(panAdvanceValidationResponse);
-//        } catch (HttpClientErrorException e) {
-//            ErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), ErrorResponse.class);
-//            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
-//        } catch(HttpServerErrorException e) {
-//            ErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), ErrorResponse.class);
-//            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
-//        } catch (Exception e) {
-//            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-//        }
-//    }
+    @PostMapping("/pan_advance")
+    public ResponseEntity<?> advancePanValidation(@RequestBody KycPanAdvanceValidation panAdvanceValidationRequest) throws JsonMappingException, JsonProcessingException {
+        try {
+            KycSuccessResponse panAdvanceValidationResponse = kycPanService.advancePanValidation(panAdvanceValidationRequest);
+            return ResponseEntity.status(HttpStatus.OK).body(panAdvanceValidationResponse);
+        } catch (HttpClientErrorException e) {
+            ErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), ErrorResponse.class);
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+        } catch(HttpServerErrorException e) {
+            ErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), ErrorResponse.class);
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+        } catch (Exception e) {
+            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
 
-    @PostMapping("/pan_details")
+    @PostMapping("/pan/details")
     public ResponseEntity<?> panDetailsValidation(@RequestBody KycPanDetailsValidation kycPanDetailsValidation) throws JsonMappingException, JsonProcessingException {
         try {
             KycSuccessResponse panDetailsValidationResponse = kycPanService.panDetailsValidation(kycPanDetailsValidation);
@@ -86,49 +86,27 @@ public class KycPanController {
 		} 
 	}
 	
-	@PostMapping("/pan")
-	public ResponseEntity<?> kycPanValidation(@Valid @RequestBody KycPanAdvanceValidation kycPanAdvance) throws JsonMappingException, JsonProcessingException {
-		try {
-			KycSuccessResponse kycPanResponse = kycPanService.KycPanAdvanceValidationFunc(kycPanAdvance);
-			return ResponseEntity.status(HttpStatus.OK).body(kycPanResponse);
-		} catch (HttpClientErrorException | HttpServerErrorException e) {
-			try {
-		        KycErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), KycErrorResponse.class);
-		        return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
-		    } catch (MismatchedInputException ex) {
-		        ErrorResponse mismatchedInputErrorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
-		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mismatchedInputErrorResponse);
-		    }
-        } catch (MismatchedInputException ex) {
-	        ErrorResponse mismatchedInputErrorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mismatchedInputErrorResponse);
-	    } catch (Exception e) {
-			ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-		}
-	}
-	
-	@PostMapping("/pan/details")
-	public ResponseEntity<?> kycPanDetailsValidation(@Valid @RequestBody KycPanDetailsValidation kycPanDetails) throws JsonMappingException, JsonProcessingException {
-		try {
-			KycSuccessResponse kycPanDetailResponse = kycPanService.KycPanDetailsValidationFunc(kycPanDetails);
-			return ResponseEntity.status(HttpStatus.OK).body(kycPanDetailResponse);
-		} catch (HttpClientErrorException | HttpServerErrorException e) {
-			try {
-		        KycErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), KycErrorResponse.class);
-		        return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
-		    } catch (MismatchedInputException ex) {
-		        ErrorResponse mismatchedInputErrorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
-		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mismatchedInputErrorResponse);
-		    }
-        } catch (MismatchedInputException ex) {
-	        ErrorResponse mismatchedInputErrorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mismatchedInputErrorResponse);
-	    } catch (Exception e) {
-			ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-		} 
-	}
+//	@PostMapping("/pan")
+//	public ResponseEntity<?> kycPanValidation(@Valid @RequestBody KycPanAdvanceValidation kycPanAdvance) throws JsonMappingException, JsonProcessingException {
+//		try {
+//			KycSuccessResponse kycPanResponse = kycPanService.KycPanAdvanceValidationFunc(kycPanAdvance);
+//			return ResponseEntity.status(HttpStatus.OK).body(kycPanResponse);
+//		} catch (HttpClientErrorException | HttpServerErrorException e) {
+//			try {
+//		        KycErrorResponse errorResponse = new ObjectMapper().readValue(e.getResponseBodyAsString(), KycErrorResponse.class);
+//		        return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+//		    } catch (MismatchedInputException ex) {
+//		        ErrorResponse mismatchedInputErrorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+//		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mismatchedInputErrorResponse);
+//		    }
+//        } catch (MismatchedInputException ex) {
+//	        ErrorResponse mismatchedInputErrorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mismatchedInputErrorResponse);
+//	    } catch (Exception e) {
+//			ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+//		}
+//	}
 
 	
 	@PostMapping("/pan/aadhaar-link")
