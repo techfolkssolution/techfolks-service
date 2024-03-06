@@ -2,12 +2,18 @@ package com.techfolks.service.impl;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.techfolks.model.dto.Api;
+import com.techfolks.model.dto.ThirdPartyReqRes;
 import com.techfolks.model.request.InitiateKycAuto;
 import com.techfolks.model.request.InitiateKycManual;
 import com.techfolks.model.request.ReSendOtp;
@@ -17,31 +23,9 @@ import com.techfolks.model.response.InitiateKycAutoResponse;
 import com.techfolks.model.response.InitiateKycManualResponse;
 import com.techfolks.model.response.ReSendOtpResponse;
 import com.techfolks.model.response.SubmitOtpResponse;
-
-import com.techfolks.model.dto.Api;
-import com.techfolks.model.dto.ThirdPartyReqRes;
 import com.techfolks.repository.ApiRepository;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import com.techfolks.model.request.InitiateKycManual;
-import com.techfolks.model.response.GetCaptchaResponse;
-import com.techfolks.model.response.InitiateKycAutoResponse;
-import com.techfolks.model.response.InitiateKycManualResponse;
-import com.techfolks.model.request.ReSendOtp;
-import com.techfolks.model.request.SubmitOtp;
-import com.techfolks.model.response.ReSendOtpResponse;
-import com.techfolks.model.response.SubmitOtpResponse;
 import com.techfolks.repository.ThirdPartyReqResRepository;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import java.util.Base64;
-@Slf4j
+
 @Service
 public class KycServiceImpl implements KycService {
 
@@ -54,19 +38,13 @@ public class KycServiceImpl implements KycService {
     @Autowired
     private ApiRepository apiRepository;
 
-    @Autowired
-    private RestTemplate restTemplate;
-
-    private String clientID = "41487515";
-    private String clientSecret = "YUoLRXhucHH6dKXCqi8Emhaqt6dgALvK";
-    private String apiUrl = "https://svcdemo.digitap.work/ent/v3/kyc/";
-
     @Override
+	@Cacheable(value = "initiateManualKyc")
     public InitiateKycManualResponse initiateManualKycFunc(InitiateKycManual initiateManualKyc) throws JsonProcessingException, JsonProcessingException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         String jsonString = new ObjectMapper().writeValueAsString(initiateManualKyc);
-        ResponseEntity<String> result = restAPICall(apiUrl + "intiate-kyc", jsonString, HttpMethod.POST);
+        ResponseEntity<String> result = commonService.kycRestAPICall("intiate-kyc", jsonString, HttpMethod.POST);
         String responseBody = result.getBody();
 
         saveThirdPartyReqRes("intiate-kyc", jsonString, responseBody);
@@ -76,10 +54,11 @@ public class KycServiceImpl implements KycService {
     }
 
     @Override
+	@CachePut(value = "getCaptcha")
     public GetCaptchaResponse getCaptchaFunc() throws JsonProcessingException, JsonProcessingException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        ResponseEntity<String> result = restAPICall(apiUrl + "get-captcha", null, HttpMethod.GET);
+        ResponseEntity<String> result = commonService.kycRestAPICall("get-captcha", null, HttpMethod.GET);
         String responseBody = result.getBody();
 
         saveThirdPartyReqRes("get-captcha", null, responseBody);
@@ -88,6 +67,7 @@ public class KycServiceImpl implements KycService {
         return jsonObject;
     }
     @Override
+    @Cacheable(value = "initiateAutoKyc", key="#initiateAutoKyc.uid")
     public InitiateKycAutoResponse initiateAutoKycFunc(InitiateKycAuto initiateAutoKyc) throws JsonProcessingException {
         String jsonString = new ObjectMapper().writeValueAsString(initiateAutoKyc);
         ResponseEntity<String> result = commonService.kycRestAPICall("intiate-kyc-auto", jsonString, HttpMethod.POST);
@@ -100,20 +80,8 @@ public class KycServiceImpl implements KycService {
     }
     	
 
-    public ResponseEntity<String> restAPICall(String url, String data, HttpMethod type) {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        String originalString = clientID + ":" + clientSecret;
-        String encodedString = Base64.getEncoder().encodeToString(originalString.getBytes());
-        headers.set(HttpHeaders.AUTHORIZATION, encodedString);
-        HttpEntity<String> requestEntity = new HttpEntity<>(data, headers);
-        ResponseEntity<String> responseEntity = restTemplate.exchange(url, type, requestEntity, String.class);
-        return responseEntity;
-    }
-
     @Override
+	@Cacheable(value = "submitOtp")
     public SubmitOtpResponse submitOtp(SubmitOtp submitOtp) throws JsonProcessingException {
         String jsonString = new ObjectMapper().writeValueAsString(submitOtp);
         ResponseEntity<String> result = commonService.kycRestAPICall("submit-otp", jsonString, HttpMethod.POST);
@@ -126,7 +94,8 @@ public class KycServiceImpl implements KycService {
     }
 
     @Override
-    public ReSendOtpResponse resendOtp(ReSendOtp reSendOtp) throws JsonProcessingException {
+	@Cacheable(value = "resendOtp")
+    public ReSendOtpResponse resendOtp (ReSendOtp reSendOtp) throws JsonProcessingException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         String jsonString = new ObjectMapper().writeValueAsString(reSendOtp);

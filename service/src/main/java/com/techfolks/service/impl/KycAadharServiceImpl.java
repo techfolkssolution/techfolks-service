@@ -1,6 +1,7 @@
 package com.techfolks.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class KycAadharServiceImpl implements KycAadharService {
 	CommonService commonService;
 	
 	@Override
+	@Cacheable(value = "kycAadharValidation")
     public KycSuccessResponse KycAadharValidationFunc(KycAadharValidation kycAadharValidation) throws JsonProcessingException {
         String jsonString = new ObjectMapper().writeValueAsString(kycAadharValidation);
         ResponseEntity<String> result = commonService.kycNewRestAPICall("aadhaar", jsonString, HttpMethod.POST);
@@ -26,6 +28,7 @@ public class KycAadharServiceImpl implements KycAadharService {
     }
 	
 	@Override
+	@Cacheable(value = "kycBasicAadharValidation")
     public KycSuccessResponse KycBasicAadharValidationFunc(KycAadharValidation kycAadharValidation) throws JsonProcessingException {
         String jsonString = new ObjectMapper().writeValueAsString(kycAadharValidation);
         ResponseEntity<String> result = commonService.kycNewRestAPICall("basic_aadhaar", jsonString, HttpMethod.POST);

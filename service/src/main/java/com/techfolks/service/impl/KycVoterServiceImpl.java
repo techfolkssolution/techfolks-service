@@ -1,6 +1,7 @@
 package com.techfolks.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class KycVoterServiceImpl implements KycVoterService {
 	CommonService commonService;
 	
 	@Override
+	@Cacheable(value = "kycVoterValidation")
     public KycSuccessResponse kycVoterValidationFunc(KycVoterValidation kycVoter) throws JsonProcessingException {
         String jsonString = new ObjectMapper().writeValueAsString(kycVoter);
         ResponseEntity<String> result = commonService.kycNewRestAPICall("voter", jsonString, HttpMethod.POST);

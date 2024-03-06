@@ -10,9 +10,6 @@ import com.techfolks.model.response.KycSuccessResponse;
 
 public interface KycPanService {
 
-//    KycSuccessResponse advancePanValidation(KycPanAdvanceValidation panAdvanceValidationRequest)
-//            throws JsonMappingException, JsonProcessingException;
-
     public KycSuccessResponse panDetailsValidation(KycPanDetailsValidation kycPanDetailsValidation)
             throws JsonMappingException, JsonProcessingException;
 	KycSuccessResponse KycPanBasicValidationFunc(KycPanBasicValidation kycPanBasicValidation)
